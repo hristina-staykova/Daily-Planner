@@ -30,22 +30,29 @@
     </header>
     <div class="container">
       <!-- Timeblocks go here -->
-      <div class="row">
-        <div class="col">
+      <div class="flex-row d-flex p-2">
+        <div class="col text-right">
           Time goes here
         </div>
-        <div class="col-6">
-          <form>
-            <textarea placeholder="Enter task..."> </textarea>
-          </form>
+        <div class="col-9">
+          <textarea
+            class="form-control"
+            type="text"
+            rows="1"
+            placeholder="Write your task here..."
+          ></textarea>
         </div>
         <div class="col">
-          <button type="button" class="btn btn-success" type="submit">
+          <button
+            type="button"
+            class="btn btn-success svnBtn btn-primary btn-block"
+            type="submit"
+          >
             Save
           </button>
         </div>
+      </div>
     </div>
-    
     <script src="javascript/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

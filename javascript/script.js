@@ -3,6 +3,11 @@ var hourLabelEl = document.querySelector(".hourLabel");
 var taskTextEl = document.querySelector(".taskText");
 var dispTaskEl = Array();
 
+//display current day
+document.querySelector("#currentDay").textContent = moment().format(
+  "MMM Do YY"
+);
+
 // displaying the whole page
 
 // for saving in the local Storage, key = hour, value = "task text":
