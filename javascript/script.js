@@ -21,7 +21,7 @@ for (i = 9; i < 18; i++) {
 
   //   hourLabel - left column of the row with the time slot
   var hourLabel = $("<div>");
-  hourLabel.addClass("col-form-label col-1");
+  hourLabel.addClass("col-form-label col-1 row");
   hourLabel.text(i + ":00");
 
   //append the left col to the row
@@ -29,7 +29,7 @@ for (i = 9; i < 18; i++) {
 
   // middle column with the task text & colouring depending on the time
   var mCol = $("<div>");
-  mCol.addClass("col-10");
+  mCol.addClass("col-10 row");
   var taskText = $("<textarea>");
   taskText.addClass("form-control");
   taskText.attr("rows", 1);
@@ -40,9 +40,9 @@ for (i = 9; i < 18; i++) {
 
   //right column - save button
   var rCol = $("<div>");
-  rCol.addClass("col-1");
+  rCol.addClass("col-1 row");
   var saveButton = $("<button>");
-  saveButton.addClass("btn btn-block");
+  saveButton.addClass("btn btn-block saveBtn");
   saveButton.attr("type", "submit");
   saveButton.attr("type", "button");
   saveButton.text("Save");
@@ -51,6 +51,7 @@ for (i = 9; i < 18; i++) {
   rowHour.append(rCol);
   rCol.append(saveButton);
 
+  //check the current time and color the rows accordingly - past, present, future
   timeColors(i);
 }
 
