@@ -72,7 +72,8 @@ textarea {
   transition: all 0.3s ease-in-out;
 }
 
-div.col {
+div.container {
+  width: 75%;
   padding: 0;
-  margin: 0;
+  margin: auto;
 }
