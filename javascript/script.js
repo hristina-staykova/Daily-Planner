@@ -33,17 +33,6 @@ for (i = 9; i < 18; i++) {
   var taskText = $("<textarea>");
   taskText.addClass("form-control");
   taskText.attr("rows", 1);
-  if (i < currentHour) {
-    taskText.addClass("past");
-  }
-
-  if (i > currentHour) {
-    taskText.addClass("future");
-  }
-
-  if (i === currentHour) {
-    taskText.addClass("present");
-  }
 
   //append the middle col to the row
   rowHour.append(mCol);
@@ -53,7 +42,7 @@ for (i = 9; i < 18; i++) {
   var rCol = $("<div>");
   rCol.addClass("col-1");
   var saveButton = $("<button>");
-  saveButton.addClass("btn btn-success btn-block");
+  saveButton.addClass("btn btn-block");
   saveButton.attr("type", "submit");
   saveButton.attr("type", "button");
   saveButton.text("Save");
@@ -61,6 +50,8 @@ for (i = 9; i < 18; i++) {
   //append to the row
   rowHour.append(rCol);
   rCol.append(saveButton);
+
+  timeColors(i);
 }
 
 // for saving in the local Storage, key = hour slot, value = "task text":
@@ -73,4 +64,19 @@ for (i = 9; i < 18; i++) {
 function saveTask() {}
 
 // how to change the rows depending on the time - past, current, future - comparing the value-timeslot with the current time
-function timeColors(params) {}
+function timeColors(i) {
+  if (i < currentHour) {
+    taskText.addClass("past");
+    saveButton.addClass("past");
+  }
+
+  if (i > currentHour) {
+    taskText.addClass("future");
+    saveButton.addClass("future");
+  }
+
+  if (i === currentHour) {
+    taskText.addClass("present");
+    saveButton.addClass("present");
+  }
+}
