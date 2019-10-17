@@ -3,6 +3,7 @@ var hourEl = document.querySelector(".hour");
 var newTask = document.querySelector(".form-control");
 var dispTaskEl = Array();
 var keyName = "hourSlot";
+var currentHour = moment().hour();
 
 //display current day
 $("#currentDay").text(moment().format("MMM Do YY"));
@@ -26,12 +27,23 @@ for (i = 9; i < 18; i++) {
   //append the left col to the row
   rowHour.append(hourLabel);
 
-  // middle column with the task text
+  // middle column with the task text & colouring depending on the time
   var mCol = $("<div>");
   mCol.addClass("col-10");
   var taskText = $("<textarea>");
-  taskText.addClass("form-control bg-light");
+  taskText.addClass("form-control");
   taskText.attr("rows", 1);
+  if (i < currentHour) {
+    taskText.addClass("past");
+  }
+
+  if (i > currentHour) {
+    taskText.addClass("future");
+  }
+
+  if (i === currentHour) {
+    taskText.addClass("present");
+  }
 
   //append the middle col to the row
   rowHour.append(mCol);
@@ -60,5 +72,5 @@ for (i = 9; i < 18; i++) {
 //create a new element in the localStorage; display the task in the text field, too...
 function saveTask() {}
 
-// how to change the rows depending on the time - past, current, future
+// how to change the rows depending on the time - past, current, future - comparing the value-timeslot with the current time
 function timeColors(params) {}
