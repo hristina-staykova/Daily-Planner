@@ -70,11 +70,14 @@ function saveTask(event) {
   var timeSlot = $(this).attr("value-timeslot");
 
   //get to the element "rowHour", go to the textarea and get the value (user input), store it in the localStorage
-  var taskText = $(event.target.parentNode.parentNode) //event.target.parentNode.parentNode is actually the element "rowHour"
-    .find("textarea")
-    .val();
-  taskText = { date: today, text: taskText };
-  localStorage.setItem(timeSlot, JSON.stringify(taskText));
+  //event.target.parentNode.parentNode is actually the element "rowHour"
+  taskObject = {
+    date: today,
+    text: $(event.target.parentNode.parentNode)
+      .find("textarea")
+      .val()
+  };
+  localStorage.setItem(timeSlot, JSON.stringify(taskObject));
 }
 
 // how to change the rows depending on the time - past, current, future - comparing the value-timeslot with the current time
