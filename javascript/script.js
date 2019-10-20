@@ -1,6 +1,8 @@
 var currentHour = moment().hour();
+
 //display current day
-$("#currentDay").text(moment().format("MMM Do YY"));
+var today = moment().format("MMM Do YY");
+$("#currentDay").text(today);
 
 // displaying the whole page
 var i = 9;
@@ -21,16 +23,23 @@ for (i = 9; i < 18; i++) {
   //append the left col to the row
   rowHour.append(hourLabel);
 
-  // middle column with the task text & colouring depending on the time
+  // middle column with the task text
   var mCol = $("<div>");
   mCol.addClass("col-10 row");
   var taskText = $("<textarea>");
   taskText.addClass("form-control");
   taskText.attr("rows", 1);
 
-  // check if we have a task in the localStorage and displaying it in "taskText" field
-  if (rowHour.attr("value-timeslot") == i) {
-    taskText.text(localStorage.getItem(i));
+  // check if we have a task in the localStorage and displaying it in "taskText" field & if it's a new day delete all tasks
+  var displayTask = JSON.parse(localStorage.getItem(i));
+
+  if (displayTask != null) {
+    taskText.text(displayTask.text);
+    if (displayTask.date != today) {
+      console.log("expired todo line");
+      localStorage.removeItem(i);
+      taskText.text(null);
+    }
   }
 
   //append the middle col to the row
@@ -55,20 +64,20 @@ for (i = 9; i < 18; i++) {
   timeColors(i);
 }
 
-var submitButtonEl = $(".saveBtn");
-
 // on click submit a new element to the localStorage and update the text field
+var submitButtonEl = $(".saveBtn");
 submitButtonEl.on("click", saveTask);
 
 function saveTask(event) {
   var timeSlot = $(this).attr("value-timeslot");
 
   //get to the element "rowHour", go to the textarea and get the value (user input), store it in the localStorage
-  //event.target.parentNode.parentNode is actually the element "rowHour"
-  var taskText = $(event.target.parentNode.parentNode)
+  var taskText = $(event.target.parentNode.parentNode) //event.target.parentNode.parentNode is actually the element "rowHour"
     .find("textarea")
     .val();
-  localStorage.setItem(timeSlot, taskText);
+  taskText = { date: today, text: taskText };
+  console.log(taskText);
+  localStorage.setItem(timeSlot, JSON.stringify(taskText));
 }
 
 // how to change the rows depending on the time - past, current, future - comparing the value-timeslot with the current time
