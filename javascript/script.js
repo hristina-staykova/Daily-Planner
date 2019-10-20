@@ -5,11 +5,10 @@ var today = moment().format("MMM Do YY");
 $("#currentDay").text(today);
 
 // displaying the whole page
-var i = 9;
 for (i = 9; i < 18; i++) {
   // rowHour - every row
   var rowHour = $("<div>");
-  rowHour.addClass("flex-row d-flex");
+  rowHour.addClass("row");
   rowHour.attr("value-timeslot", i);
 
   //   append the row to the container
@@ -28,9 +27,8 @@ for (i = 9; i < 18; i++) {
   mCol.addClass("col-10 row");
   var taskText = $("<textarea>");
   taskText.addClass("form-control");
-  taskText.attr("rows", 1);
 
-  // check if we have a task in the localStorage and displaying it in "taskText" field & if it's a new day delete all tasks
+  // on refresh/opening the app - check if we have a task in the localStorage and displaying it in "taskText" field & if it's a new day - delete all tasks
   var displayTask = JSON.parse(localStorage.getItem(i));
 
   if (displayTask != null) {
@@ -50,7 +48,7 @@ for (i = 9; i < 18; i++) {
   var rCol = $("<div>");
   rCol.addClass("col-1 row");
   var saveButton = $("<button>");
-  saveButton.addClass("btn btn-block saveBtn");
+  saveButton.addClass("btn-block saveBtn");
   saveButton.attr("type", "submit");
   saveButton.attr("type", "button");
   saveButton.attr("value-timeslot", i);
@@ -76,24 +74,20 @@ function saveTask(event) {
     .find("textarea")
     .val();
   taskText = { date: today, text: taskText };
-  console.log(taskText);
   localStorage.setItem(timeSlot, JSON.stringify(taskText));
 }
 
 // how to change the rows depending on the time - past, current, future - comparing the value-timeslot with the current time
-function timeColors(i) {
-  if (i < currentHour) {
+function timeColors(t) {
+  if (t < currentHour) {
     taskText.addClass("past");
-    saveButton.addClass("past");
   }
 
-  if (i > currentHour) {
+  if (t > currentHour) {
     taskText.addClass("future");
-    saveButton.addClass("future");
   }
 
-  if (i === currentHour) {
+  if (t === currentHour) {
     taskText.addClass("present");
-    saveButton.addClass("present");
   }
 }
