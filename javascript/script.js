@@ -1,10 +1,4 @@
-var submitButtonEl = document.querySelector(".svnBtn");
-var hourEl = document.querySelector(".hour");
-var newTask = document.querySelector(".form-control");
-var dispTaskEl = Array();
-var keyName = "hourSlot";
 var currentHour = moment().hour();
-
 //display current day
 $("#currentDay").text(moment().format("MMM Do YY"));
 
@@ -34,6 +28,11 @@ for (i = 9; i < 18; i++) {
   taskText.addClass("form-control");
   taskText.attr("rows", 1);
 
+  // check if we have a task in the localStorage and displaying it in "taskText" field
+  if (rowHour.attr("value-timeslot") == i) {
+    taskText.text(localStorage.getItem(i));
+  }
+
   //append the middle col to the row
   rowHour.append(mCol);
   mCol.append(taskText);
@@ -45,6 +44,7 @@ for (i = 9; i < 18; i++) {
   saveButton.addClass("btn btn-block saveBtn");
   saveButton.attr("type", "submit");
   saveButton.attr("type", "button");
+  saveButton.attr("value-timeslot", i);
   saveButton.text("Save");
 
   //append to the row
@@ -55,14 +55,21 @@ for (i = 9; i < 18; i++) {
   timeColors(i);
 }
 
-// for saving in the local Storage, key = hour slot, value = "task text":
-// var toDoTask = { hourEl: newTask.textContent };
+var submitButtonEl = $(".saveBtn");
 
 // on click submit a new element to the localStorage and update the text field
-// submitButtonEl.addEventListener("click", saveTask);
+submitButtonEl.on("click", saveTask);
 
-//create a new element in the localStorage; display the task in the text field, too...
-function saveTask() {}
+function saveTask(event) {
+  var timeSlot = $(this).attr("value-timeslot");
+
+  //get to the element "rowHour", go to the textarea and get the value (user input), store it in the localStorage
+  //event.target.parentNode.parentNode is actually the element "rowHour"
+  var taskText = $(event.target.parentNode.parentNode)
+    .find("textarea")
+    .val();
+  localStorage.setItem(timeSlot, taskText);
+}
 
 // how to change the rows depending on the time - past, current, future - comparing the value-timeslot with the current time
 function timeColors(i) {
